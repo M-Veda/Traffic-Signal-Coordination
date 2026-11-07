@@ -186,8 +186,7 @@ Traffic-Signal-Coordination/
 │   ├── results_overall.md, results_wait_by_scenario.md, results_by_scenario.csv, paired_comparison_wait.json
 │   ├── evaluation_raw.json, training_logs.json, training_log.txt, trained_q_tables.pkl
 │   └── iteration1_v1_400ep/  archived first design (see "Design iteration")
-└── 06_Documentation/
-    └── Project_Summary.md
+
 ```
 
 ## Installation and setup
