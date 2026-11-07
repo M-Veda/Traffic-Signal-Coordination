@@ -1,0 +1,91 @@
+  [IQL seed 0] ep    1 eps=1.00 mean return(last 20)= -106.44 val avg wait=151.37s
+  [IQL seed 0] ep   50 eps=0.83 mean return(last 20)= -213.62 val avg wait= 33.84s
+  [IQL seed 0] ep  100 eps=0.66 mean return(last 20)= -194.94 val avg wait= 33.21s
+  [IQL seed 0] ep  150 eps=0.49 mean return(last 20)= -146.50 val avg wait= 41.56s
+  [IQL seed 0] ep  200 eps=0.32 mean return(last 20)= -125.46 val avg wait= 33.79s
+  [IQL seed 0] ep  250 eps=0.16 mean return(last 20)= -102.73 val avg wait= 33.04s
+  [IQL seed 0] ep  300 eps=0.05 mean return(last 20)= -104.72 val avg wait= 38.95s
+  [IQL seed 0] ep  350 eps=0.05 mean return(last 20)= -127.09 val avg wait= 35.45s
+  [IQL seed 0] ep  400 eps=0.05 mean return(last 20)= -131.81 val avg wait= 34.79s
+  [IQL seed 1] ep    1 eps=1.00 mean return(last 20)= -438.02 val avg wait=441.29s
+  [IQL seed 1] ep   50 eps=0.83 mean return(last 20)= -196.62 val avg wait= 33.09s
+  [IQL seed 1] ep  100 eps=0.66 mean return(last 20)= -181.25 val avg wait= 33.65s
+  [IQL seed 1] ep  150 eps=0.49 mean return(last 20)= -156.85 val avg wait= 41.70s
+  [IQL seed 1] ep  200 eps=0.32 mean return(last 20)= -125.03 val avg wait= 32.90s
+  [IQL seed 1] ep  250 eps=0.16 mean return(last 20)= -110.62 val avg wait= 42.72s
+  [IQL seed 1] ep  300 eps=0.05 mean return(last 20)= -104.44 val avg wait= 35.08s
+  [IQL seed 1] ep  350 eps=0.05 mean return(last 20)= -111.68 val avg wait= 33.34s
+  [IQL seed 1] ep  400 eps=0.05 mean return(last 20)= -101.63 val avg wait= 37.22s
+  [IQL seed 2] ep    1 eps=1.00 mean return(last 20)= -391.59 val avg wait=388.18s
+  [IQL seed 2] ep   50 eps=0.83 mean return(last 20)= -267.26 val avg wait= 33.16s
+  [IQL seed 2] ep  100 eps=0.66 mean return(last 20)= -152.61 val avg wait= 32.64s
+  [IQL seed 2] ep  150 eps=0.49 mean return(last 20)= -162.13 val avg wait= 32.91s
+  [IQL seed 2] ep  200 eps=0.32 mean return(last 20)= -138.40 val avg wait= 32.84s
+  [IQL seed 2] ep  250 eps=0.16 mean return(last 20)= -111.22 val avg wait= 34.96s
+  [IQL seed 2] ep  300 eps=0.05 mean return(last 20)= -103.58 val avg wait= 33.91s
+  [IQL seed 2] ep  350 eps=0.05 mean return(last 20)=  -96.86 val avg wait= 38.11s
+  [IQL seed 2] ep  400 eps=0.05 mean return(last 20)= -101.90 val avg wait= 37.42s
+  [IQL seed 3] ep    1 eps=1.00 mean return(last 20)= -194.15 val avg wait= 98.87s
+  [IQL seed 3] ep   50 eps=0.83 mean return(last 20)= -219.65 val avg wait= 34.74s
+  [IQL seed 3] ep  100 eps=0.66 mean return(last 20)= -152.33 val avg wait= 33.77s
+  [IQL seed 3] ep  150 eps=0.49 mean return(last 20)= -155.64 val avg wait= 37.83s
+  [IQL seed 3] ep  200 eps=0.32 mean return(last 20)= -118.86 val avg wait= 35.17s
+  [IQL seed 3] ep  250 eps=0.16 mean return(last 20)= -119.67 val avg wait= 34.02s
+  [IQL seed 3] ep  300 eps=0.05 mean return(last 20)= -105.26 val avg wait= 61.00s
+  [IQL seed 3] ep  350 eps=0.05 mean return(last 20)=  -95.13 val avg wait= 47.51s
+  [IQL seed 3] ep  400 eps=0.05 mean return(last 20)= -113.72 val avg wait= 33.34s
+  [IQL seed 4] ep    1 eps=1.00 mean return(last 20)= -373.22 val avg wait=240.30s
+  [IQL seed 4] ep   50 eps=0.83 mean return(last 20)= -222.61 val avg wait= 32.74s
+  [IQL seed 4] ep  100 eps=0.66 mean return(last 20)= -165.27 val avg wait= 33.02s
+  [IQL seed 4] ep  150 eps=0.49 mean return(last 20)= -147.50 val avg wait= 32.79s
+  [IQL seed 4] ep  200 eps=0.32 mean return(last 20)= -113.81 val avg wait= 32.10s
+  [IQL seed 4] ep  250 eps=0.16 mean return(last 20)= -112.83 val avg wait= 32.55s
+  [IQL seed 4] ep  300 eps=0.05 mean return(last 20)= -108.87 val avg wait= 33.52s
+  [IQL seed 4] ep  350 eps=0.05 mean return(last 20)= -115.11 val avg wait= 32.31s
+  [IQL seed 4] ep  400 eps=0.05 mean return(last 20)= -114.12 val avg wait= 33.61s
+  [Coop-IQL (proposed) seed 0] ep    1 eps=1.00 mean return(last 20)= -106.44 val avg wait= 98.21s
+  [Coop-IQL (proposed) seed 0] ep   50 eps=0.83 mean return(last 20)= -237.83 val avg wait= 40.26s
+  [Coop-IQL (proposed) seed 0] ep  100 eps=0.66 mean return(last 20)= -198.76 val avg wait= 33.58s
+  [Coop-IQL (proposed) seed 0] ep  150 eps=0.49 mean return(last 20)= -154.41 val avg wait= 37.94s
+  [Coop-IQL (proposed) seed 0] ep  200 eps=0.32 mean return(last 20)= -135.03 val avg wait= 37.03s
+  [Coop-IQL (proposed) seed 0] ep  250 eps=0.16 mean return(last 20)= -105.82 val avg wait= 36.78s
+  [Coop-IQL (proposed) seed 0] ep  300 eps=0.05 mean return(last 20)= -107.99 val avg wait= 37.25s
+  [Coop-IQL (proposed) seed 0] ep  350 eps=0.05 mean return(last 20)= -132.21 val avg wait= 37.75s
+  [Coop-IQL (proposed) seed 0] ep  400 eps=0.05 mean return(last 20)= -144.40 val avg wait= 37.55s
+  [Coop-IQL (proposed) seed 1] ep    1 eps=1.00 mean return(last 20)= -438.02 val avg wait=264.01s
+  [Coop-IQL (proposed) seed 1] ep   50 eps=0.83 mean return(last 20)= -186.25 val avg wait= 44.97s
+  [Coop-IQL (proposed) seed 1] ep  100 eps=0.66 mean return(last 20)= -185.81 val avg wait= 36.02s
+  [Coop-IQL (proposed) seed 1] ep  150 eps=0.49 mean return(last 20)= -161.44 val avg wait= 33.90s
+  [Coop-IQL (proposed) seed 1] ep  200 eps=0.32 mean return(last 20)= -127.60 val avg wait= 35.27s
+  [Coop-IQL (proposed) seed 1] ep  250 eps=0.16 mean return(last 20)= -114.01 val avg wait= 36.34s
+  [Coop-IQL (proposed) seed 1] ep  300 eps=0.05 mean return(last 20)= -110.98 val avg wait= 37.35s
+  [Coop-IQL (proposed) seed 1] ep  350 eps=0.05 mean return(last 20)= -117.21 val avg wait= 41.65s
+  [Coop-IQL (proposed) seed 1] ep  400 eps=0.05 mean return(last 20)= -109.04 val avg wait= 47.24s
+  [Coop-IQL (proposed) seed 2] ep    1 eps=1.00 mean return(last 20)= -391.59 val avg wait=323.97s
+  [Coop-IQL (proposed) seed 2] ep   50 eps=0.83 mean return(last 20)= -280.30 val avg wait= 37.76s
+  [Coop-IQL (proposed) seed 2] ep  100 eps=0.66 mean return(last 20)= -153.52 val avg wait= 35.18s
+  [Coop-IQL (proposed) seed 2] ep  150 eps=0.49 mean return(last 20)= -171.21 val avg wait= 34.59s
+  [Coop-IQL (proposed) seed 2] ep  200 eps=0.32 mean return(last 20)= -145.55 val avg wait= 35.19s
+  [Coop-IQL (proposed) seed 2] ep  250 eps=0.16 mean return(last 20)= -117.79 val avg wait= 35.83s
+  [Coop-IQL (proposed) seed 2] ep  300 eps=0.05 mean return(last 20)= -110.59 val avg wait= 40.56s
+  [Coop-IQL (proposed) seed 2] ep  350 eps=0.05 mean return(last 20)= -100.69 val avg wait= 38.21s
+  [Coop-IQL (proposed) seed 2] ep  400 eps=0.05 mean return(last 20)= -103.64 val avg wait= 34.27s
+  [Coop-IQL (proposed) seed 3] ep    1 eps=1.00 mean return(last 20)= -194.15 val avg wait=120.24s
+  [Coop-IQL (proposed) seed 3] ep   50 eps=0.83 mean return(last 20)= -230.67 val avg wait= 36.64s
+  [Coop-IQL (proposed) seed 3] ep  100 eps=0.66 mean return(last 20)= -164.43 val avg wait= 33.88s
+  [Coop-IQL (proposed) seed 3] ep  150 eps=0.49 mean return(last 20)= -156.81 val avg wait= 41.22s
+  [Coop-IQL (proposed) seed 3] ep  200 eps=0.32 mean return(last 20)= -121.87 val avg wait= 34.59s
+  [Coop-IQL (proposed) seed 3] ep  250 eps=0.16 mean return(last 20)= -128.91 val avg wait= 35.83s
+  [Coop-IQL (proposed) seed 3] ep  300 eps=0.05 mean return(last 20)= -109.68 val avg wait= 34.61s
+  [Coop-IQL (proposed) seed 3] ep  350 eps=0.05 mean return(last 20)=  -96.46 val avg wait= 38.55s
+  [Coop-IQL (proposed) seed 3] ep  400 eps=0.05 mean return(last 20)= -117.35 val avg wait= 43.54s
+  [Coop-IQL (proposed) seed 4] ep    1 eps=1.00 mean return(last 20)= -373.22 val avg wait=255.45s
+  [Coop-IQL (proposed) seed 4] ep   50 eps=0.83 mean return(last 20)= -207.35 val avg wait= 35.07s
+  [Coop-IQL (proposed) seed 4] ep  100 eps=0.66 mean return(last 20)= -172.75 val avg wait= 34.12s
+  [Coop-IQL (proposed) seed 4] ep  150 eps=0.49 mean return(last 20)= -152.74 val avg wait= 34.19s
+  [Coop-IQL (proposed) seed 4] ep  200 eps=0.32 mean return(last 20)= -116.43 val avg wait= 34.56s
+  [Coop-IQL (proposed) seed 4] ep  250 eps=0.16 mean return(last 20)= -116.08 val avg wait= 34.44s
+  [Coop-IQL (proposed) seed 4] ep  300 eps=0.05 mean return(last 20)= -116.51 val avg wait= 35.06s
+  [Coop-IQL (proposed) seed 4] ep  350 eps=0.05 mean return(last 20)= -119.13 val avg wait= 43.54s
+  [Coop-IQL (proposed) seed 4] ep  400 eps=0.05 mean return(last 20)= -115.94 val avg wait= 35.52s
+Training finished in 410s

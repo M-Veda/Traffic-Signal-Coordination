@@ -1,0 +1,26 @@
+{
+  "Coop-IQL minus Random": {
+    "mean_diff_wait_s": -53.399282880688155,
+    "ci95_low": -61.371407004199746,
+    "ci95_high": -45.789272106312445,
+    "share_of_runs_coop_better": 1.0
+  },
+  "Coop-IQL minus Fixed-time": {
+    "mean_diff_wait_s": -0.10217638177482172,
+    "ci95_low": -3.4087575243636805,
+    "ci95_high": 3.736266082140422,
+    "share_of_runs_coop_better": 0.6
+  },
+  "Coop-IQL minus Longest-queue-first": {
+    "mean_diff_wait_s": 3.662344136620051,
+    "ci95_low": 0.46648978072531777,
+    "ci95_high": 7.518119782304072,
+    "share_of_runs_coop_better": 0.42
+  },
+  "Coop-IQL minus IQL": {
+    "mean_diff_wait_s": 4.310242606786462,
+    "ci95_low": 1.738894825448445,
+    "ci95_high": 7.440550756784555,
+    "share_of_runs_coop_better": 0.02
+  }
+}
