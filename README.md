@@ -209,15 +209,3 @@ Custom simulator (not SUMO) with two-phase signals and no left turns or pedestri
 | 2 | A. Maneesha | 100523729039 |
 | 3 | R. Sravya | 100523729052 |
 | 4 | Yusra Fateen | 100523729062 |
-
-## Academic submission information
-
-| Item | Details |
-|---|---|
-| Course | Reinforcement Learning |
-| Assignment | Real-World RL Homework Projects, Unit 5 (10 marks) |
-| Selected project | Project 10: Traffic-Signal Coordination using Multi-Agent Reinforcement Learning |
-| Programme | B.Tech, Artificial Intelligence & Machine Learning |
-| Institution | University College of Engineering, Osmania University, Hyderabad |
-| Submission deadline | 7 November 2026, 3:00 PM |
-| Deliverables | Problem formulation (PDF), implementation, learning curves and baseline comparison, five-slide presentation, project report (PDF) |
