@@ -12,8 +12,8 @@ import config as C
 from make_results import aggregate, ORDER
 
 RD = sys.argv[1] if len(sys.argv) > 1 else os.path.join("..", "05_Experimental_Results")
-OUT_REPORT = os.path.join("..", "01_Project_Report", "RL_Traffic_Signal_Coordination_Report.pdf")
-OUT_ONE = os.path.join("..", "02_Problem_Formulation", "Problem_Formulation_One_Page.pdf")
+OUT_REPORT = os.path.join("..", "01_Project_Report", "Traffic_Signal_Coordination_Technical_Report.pdf")
+OUT_ONE = os.path.join("..", "02_Problem_Formulation", "Problem_Formulation.pdf")
 
 
 def load_numbers():
@@ -44,10 +44,10 @@ def one_page(N):
     sub = ParagraphStyle("s", parent=body, alignment=TA_CENTER, fontSize=8.2, textColor=colors.grey)
     cell = ParagraphStyle("c", parent=body, fontSize=8.8, leading=10.8, alignment=0)
     doc = SimpleDocTemplate(OUT_ONE, pagesize=A4, leftMargin=1.5 * cm, rightMargin=1.5 * cm, topMargin=1.2 * cm, bottomMargin=1.0 * cm,
-                            title="Problem Formulation - Multi-Agent RL Traffic Signal Coordination")
+                            title="Problem Formulation - Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning")
     P = lambda s, st=body: Paragraph(s, st)
-    el = [P("Problem Formulation: Intelligent Multi-Agent Traffic Signal Coordination Using Reinforcement Learning", t),
-          P("Project 10 - Traffic-Signal Coordination using Multi-Agent RL | B.Tech AI &amp; ML | Reinforcement Learning, Unit 5 homework", sub),
+    el = [P("Problem Formulation: Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning", t),
+          P("Technical brief: MDP formulation, algorithm and multi-agent interaction | custom Python simulator (not SUMO)", sub),
           P("1. Problem statement and motivation", h),
           P("Urban congestion wastes time and fuel. Conventional fixed-time signals repeat a pre-set cycle regardless of the actual traffic, so green time is "
             "wasted on empty approaches while long queues build elsewhere, and queues at one junction spill back and block the next. The task is to let "
@@ -138,22 +138,25 @@ def report(N):
 
     def page_deco(canvas, doc):
         canvas.saveState(); canvas.setFont("Helvetica", 8); canvas.setFillColor(colors.grey)
-        canvas.drawString(2 * cm, 1.1 * cm, "Multi-Agent RL Traffic Signal Coordination - RL Homework (Unit 5)")
+        canvas.drawString(2 * cm, 1.1 * cm, "Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning - Technical Report")
         canvas.drawRightString(A4[0] - 2 * cm, 1.1 * cm, f"Page {doc.page}")
         canvas.restoreState()
 
     doc = SimpleDocTemplate(OUT_REPORT, pagesize=A4, leftMargin=2.2 * cm, rightMargin=2.2 * cm, topMargin=2 * cm, bottomMargin=2 * cm,
-                            title="Intelligent Multi-Agent Traffic Signal Coordination Using Reinforcement Learning")
+                            title="Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning")
     E = []
     # ---- title page
-    E += [Spacer(1, 4 * cm), P("<font size=22><b>Intelligent Multi-Agent Traffic Signal Coordination Using Reinforcement Learning for Urban Traffic Congestion Optimization</b></font>",
+    E += [Spacer(1, 3.6 * cm), P("<font size=22><b>Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning</b></font>",
                                ParagraphStyle("tt", parent=body, alignment=TA_CENTER, leading=28, fontName="Helvetica-Bold")),
-          Spacer(1, 1.2 * cm), P("<font size=13>Reinforcement Learning - Homework (Unit 5, Project 10)</font>", ParagraphStyle("t2", parent=body, alignment=TA_CENTER)),
-          Spacer(1, 0.5 * cm), P("<font size=12>B.Tech, Artificial Intelligence &amp; Machine Learning<br/>University College of Engineering, Osmania University, Hyderabad</font>", ParagraphStyle("t3", parent=body, alignment=TA_CENTER, leading=17)),
-          Spacer(1, 1.5 * cm), P("<font size=11>Submission deadline: 7 November 2026</font>", ParagraphStyle("t4", parent=body, alignment=TA_CENTER)),
+          Spacer(1, 0.6 * cm), P("<i>A Multi-Agent Reinforcement Learning Approach to Adaptive Urban Traffic Management and Congestion Optimization</i>",
+                               ParagraphStyle("t2", parent=body, alignment=TA_CENTER, fontSize=12.5, leading=17)),
+          Spacer(1, 0.9 * cm), P("<font size=13>Technical Project Report</font>", ParagraphStyle("t3", parent=body, alignment=TA_CENTER)),
+          Spacer(1, 1.4 * cm),
+          P("<b>Contributors</b><br/>M. Sai Teja Sree Veda (100523729038) &middot; A. Maneesha (100523729039)<br/>R. Sravya (100523729052) &middot; Yusra Fateen (100523729062)",
+            ParagraphStyle("t4", parent=body, alignment=TA_CENTER, leading=16, fontSize=11)),
           Spacer(1, 3 * cm),
-          P("<i>All results in this report were produced by the accompanying code (custom Python simulator; SUMO was not used). "
-            "The system has only been evaluated in simulation and has not been deployed on real roads.</i>", ParagraphStyle("t5", parent=body, alignment=TA_CENTER, fontSize=9.5)),
+          P("<i>All results in this report were produced by the accompanying code on a custom Python traffic simulator (SUMO and CityFlow were not used). "
+            "The system has only been evaluated in simulation; it has not been deployed or tested on real roads.</i>", ParagraphStyle("t5", parent=body, alignment=TA_CENTER, fontSize=9.5)),
           PageBreak()]
     # ---- abstract
     E += [P("Abstract", h1),
@@ -171,14 +174,14 @@ def report(N):
             "Reinforcement learning (RL) offers a way to learn a control policy directly from interaction with traffic, using only a reward signal that expresses what 'good traffic' means."),
           P("Because a city has many intersections, each signal can be treated as an agent. Neighbouring agents influence each other: a long green at one junction releases a platoon that arrives at the next, and a full downstream link blocks the upstream junction. "
             "This makes traffic-signal coordination a canonical multi-agent RL problem.")]
-    E += [P("2. Problem Statement", h1),
+    E += [P("2. Problem Definition", h1),
           P("<i>Given a network of interconnected signalised intersections with stochastic vehicle arrivals, learn a decentralised signal-control policy - one agent per intersection - that reduces average vehicle waiting time, queue length and congestion, "
             "and increases throughput, compared with fixed-time control, using only locally observable information and limited communication with neighbouring agents.</i>")]
     E += [P("3. Objectives", h1),
           P("(1) Build a reproducible multi-intersection simulator with variable demand. (2) Implement independent RL agents with state, action and reward definitions suited to traffic. "
             "(3) Add cooperation between neighbouring agents through information and reward sharing. (4) Compare against Random, Fixed-time and Longest-queue-first baselines on identical traffic. "
             "(5) Measure waiting time, queue length, throughput, travel time and congestion, and report the results - including unfavourable ones - honestly.")]
-    E += [P("4. Related Work and Background", h1),
+    E += [P("4. Related Technical Concepts", h1),
           P("<b>Classical signal control.</b> Webster (1958) derived fixed-time cycle lengths and splits that minimise delay for a given average flow. Actuated and adaptive systems extend this idea with detectors. "
             "Max-pressure control (Varaiya, 2013) is a decentralised rule with stability guarantees that serves the phase with the largest pressure (upstream minus downstream queue). "
             "Our Longest-queue-first baseline is a simpler actuated heuristic in the same spirit."),
@@ -186,16 +189,19 @@ def report(N):
             "Tan (1993) discussed independent versus cooperative learners, the basis of the IQL and cooperative variants here. More recent work uses deep networks, for example PressLight (Wei et al., 2019) and "
             "multi-agent actor-critic for large networks (Chu et al., 2019); Wei et al. (2019) also provide a survey. SUMO (Lopez et al., 2018) is the usual open-source simulator in this literature. "
             "We use tabular Q-learning, which is simple and transparent but less powerful than those deep methods.")]
-    E += [P("5. Reinforcement Learning Fundamentals Used", h1),
+    E += [P("Reinforcement learning fundamentals", h2),
           P("An RL problem is a Markov decision process (MDP) (S, A, P, R, &gamma;): at each step the agent observes state s, chooses action a, receives reward r and moves to s' with probability P(s'|s,a). "
             "The goal is a policy &pi;(a|s) maximising the expected discounted return G = &Sigma; &gamma;<super>t</super> r<sub>t</sub> (Sutton &amp; Barto, 2018). The action-value function Q(s,a) is the expected return of taking a in s and following &pi; afterwards."),
           P("<b>Q-learning</b> (Watkins &amp; Dayan, 1992) is an off-policy temporal-difference method: Q(s,a) &larr; Q(s,a) + &alpha;[r + &gamma; max<sub>a'</sub>Q(s',a') &minus; Q(s,a)]. "
             "Exploration uses &epsilon;-greedy action selection. In a <b>multi-agent</b> setting, each agent sees an environment that changes as the other agents learn (non-stationarity), so the single-agent convergence guarantee of Q-learning no longer applies. "
             "In <b>Independent Q-Learning</b> every agent simply ignores this and learns as if alone; it often works in practice but can be unstable.")]
+    E += [P("5. System Architecture", h1),
+          fig(os.path.join(RD, "architecture_diagram.png"), 15.5, "Figure 1. System architecture and files.", cap),
+          P("The demand generator pre-computes every vehicle arrival of an episode from a seed, so all controllers face exactly the same vehicles. The simulator advances in 1 s steps; agents are queried every 10 s.")]
     # ---- 6 MDP
-    E += [P("6. MDP Formulation", h1),
+    E += [P("6. Reinforcement Learning Methodology", h1), P("6.1 MDP formulation", h2),
           P("Each intersection i is an agent in a decentralised, partially observable multi-agent MDP (a Markov game): its observation covers only its own approaches, plus (for Coop-IQL) two flags about downstream approaches. "
-            "Table 1 summarises the formulation; Figure 1 shows how neighbouring agents interact."),
+            "Table 1 summarises the formulation; Figure 2 shows how neighbouring agents interact."),
           kv([("<b>State</b>", "Own queue on the N+S axis and on the E+W axis, each binned to 4 levels {0-3, 4-9, 10-19, 20+}; current phase (2); longest head-of-queue waiting time on the red axis binned to 3 levels {&lt;15 s, 15-40 s, &gt;40 s}. "
                                 "= 96 states (IQL). Coop-IQL appends two binary flags (per axis: is any downstream approach it feeds &ge;60% full, i.e. &ge;12 of 20 vehicles?) = 384 states."),
               ("<b>Action</b>", "Phase for the next 10 s: 0 = north-south green, 1 = east-west green. Changing phase inserts 2 s of all-red (lost time)."),
@@ -205,9 +211,9 @@ def report(N):
               ("<b>Discount</b>", "&gamma; = 0.9 (about a 100 s horizon)."),
               ("<b>Objective</b>", "Maximise E[&Sigma; &gamma;<sup>t</sup> r<sub>i,t</sub>] for every i; network goal: minimise mean vehicle waiting time.")], [3.6 * cm, 12.8 * cm]),
           P("Table 1. MDP formulation for each agent.", cap),
-          fig(os.path.join(RD, "agent_interaction_diagram.png"), 9.5, "Figure 1. Neighbouring agents share information and part of their reward; each keeps its own Q-table.", cap)]
+          fig(os.path.join(RD, "agent_interaction_diagram.png"), 9.5, "Figure 2. Neighbouring agents share information and part of their reward; each keeps its own Q-table.", cap)]
     # ---- 7 methodology / 8 architecture
-    E += [P("7. Proposed Methodology", h1),
+    E += [P("6.2 Algorithm and training procedure", h2),
           P("<b>Algorithm.</b> Nine tabular Q-learners, one per intersection, with separate Q-tables (intersections on the border and at the centre face different traffic, so sharing one table was not assumed). "
             "All agents act simultaneously every 10 s. Hyper-parameters: &alpha; = 0.1, &gamma; = 0.9, &epsilon; decayed linearly from 1.0 to 0.05 over the first 700 of 1000 episodes, "
             "co-operation weight &beta; = 0.3. Training episodes use a randomly drawn scenario (low, medium, high, asym, peak) and a random demand seed from 0-999, so the policy must generalise across demand patterns. "
@@ -216,10 +222,7 @@ def report(N):
             "It is a decentralised design: no central Q-function or central controller is used."),
           P("<b>Baselines.</b> <i>Random</i>: a uniformly random phase every 10 s. <i>Fixed-time</i>: all junctions alternate 20 s NS / 20 s EW (40 s cycle, no offsets). "
             "<i>Longest-queue-first</i>: switch to the axis with the larger queue when it exceeds the current axis by more than 2 vehicles (extra, non-learning reference).")]
-    E += [P("8. System Architecture", h1),
-          fig(os.path.join(RD, "architecture_diagram.png"), 15.5, "Figure 2. System architecture and files.", cap),
-          P("The demand generator pre-computes every vehicle arrival of an episode from a seed, so all controllers face exactly the same vehicles. The simulator advances in 1 s steps; agents are queried every 10 s.")]
-    E += [P("9. Implementation Details", h1),
+    E += [P("7. Implementation", h1),
           P("The code is plain Python 3 with NumPy and Matplotlib (no paid APIs). Modules: <font name='Courier'>config.py</font> (all constants), <font name='Courier'>traffic_env.py</font> (simulator), "
             "<font name='Courier'>agents.py</font> (baselines and Q-learners), <font name='Courier'>train.py</font>, <font name='Courier'>evaluate.py</font>, <font name='Courier'>make_results.py</font> (charts and tables), "
             "<font name='Courier'>visualize.py</font> (animation), <font name='Courier'>tests/test_env.py</font> (5 unit tests, e.g. vehicle conservation and queue-capacity checks), <font name='Courier'>run_all.py</font> (one-command pipeline)."),
@@ -228,7 +231,7 @@ def report(N):
             "Left turns, pedestrians, yellow phases and vehicle dynamics are not modelled. "
             "Demand per entry point (veh/s): low 0.07, medium 0.10, high 0.13; <i>asym</i> 0.16 for southbound/eastbound and 0.05 for the other entries; <i>peak</i> rising linearly 0.05 &rarr; 0.18 at mid-episode and back to 0.05 (about 1500-2800 vehicles per 30 min episode). "
             "The demand levels were chosen so that fixed-time control is comfortable under low demand and strained under peak demand.")]
-    E += [P("10. Experimental Setup", h1),
+    E += [P("8. Experimental Setup", h1),
           kv([("Training", f"{C.TRAIN_EPISODES} episodes x 5 independent runs (seeds 0-4) for each of IQL and Coop-IQL; random scenario per episode."),
               ("Evaluation", "50 demand realisations (5 scenarios x 10 seeds, 1000-1009), 1800 s each; the same vehicle arrivals for every controller. "
                              "RL controllers are greedy (&epsilon; = 0); each of the 5 trained runs is evaluated on all 50 realisations (250 episodes per RL method), baselines 50 episodes."),
@@ -237,8 +240,8 @@ def report(N):
                           "<b>Spill-back events</b>: blocked discharge attempts."),
               ("Hardware", "Single CPU core. Training of all 10 runs took about 10 minutes; evaluation about a minute.")], [3 * cm, 13.4 * cm]),
           Spacer(1, 6)]
-    # ---- 11 results
-    E += [P("11. Results and Discussion", h1),
+    # ---- results
+    E += [P("9. Results and Discussion", h1),
           P("<b>Learning curves.</b> Figure 3 (left) shows the episode return during training: both RL variants improve from about &minus;300 to about &minus;100 and then plateau, with nearly identical curves. "
             "The training return is noisy because every episode uses a different random scenario. Figure 3 (right) shows the greedy validation waiting time: a policy that is already competitive (&asymp;33-35 s) appears after only about 50 episodes. "
             "Late in training the validation curves oscillate; with a constant learning rate and non-stationary neighbours, individual runs sometimes drift to worse policies, and the 'best' checkpoint is not the last. "
@@ -276,25 +279,26 @@ def report(N):
             "Because it also failed in the peak scenario, we changed the shared information to downstream-fullness flags and trained for 1000 episodes (both methods), using validation seeds to check the change. "
             "Note that this redesign was motivated by seeing the first test-set results, so the test seeds are not completely untouched; the improvement for IQL from 400 to 1000 episodes is part of the same change. "
             "The final design is still outperformed by plain IQL.")]
-    E += [P("12. Limitations", h1),
+    E += [P("10. Limitations", h1),
           P("(1) <b>Simulator realism:</b> a custom queue-based model, not SUMO; no vehicle dynamics, lane changing, left turns, pedestrians, yellow phases, or re-routing, and a single network size. Absolute numbers (e.g. seconds of waiting) are properties of this simulator and must not be read as real-world predictions. "
             "(2) <b>Algorithm:</b> tabular Q-learning with hand-chosen bins; no deep RL; constant learning rate; hyper-parameters and reward weights were not tuned systematically. "
             "(3) <b>Baselines:</b> the Fixed-time plan was not optimised (no Webster calculation, no offsets/green wave), so a tuned fixed plan may be stronger than the one used here. Max-pressure was not implemented. "
             "(4) <b>Statistics:</b> 5 training runs and 50 test episodes per scenario set; the bimodal Coop-IQL outcome shows that 5 runs are few. Throughput differences between sensible controllers are small relative to scenario variance. "
-            "(5) <b>Evaluation protocol:</b> test seeds were used once before redesign (Section 11). (6) The 'travel time' averages only vehicles that completed their trip, which flatters controllers that leave many vehicles in the network; the counts of vehicles left are stored in the raw results.")]
-    E += [P("13. Ethical Considerations", h1),
+            "(5) <b>Evaluation protocol:</b> test seeds were used once before redesign (Section 9). (6) The 'travel time' averages only vehicles that completed their trip, which flatters controllers that leave many vehicles in the network; the counts of vehicles left are stored in the raw results.")]
+    E += [P("11. Safety and Ethical Considerations", h1),
           P("<b>Safety and reliability.</b> A learned controller must never compromise safety: real deployments need hard-coded safety layers (minimum green, clearance and conflict monitors, fail-safe flashing or fixed-time fallback when sensors or software fail). "
             "Our agents have no such layer; a learned policy can fail abruptly in situations not seen in training, as the peak-scenario failures of some runs illustrate. "
             "<b>Fairness.</b> Minimising average waiting time can starve minor roads, pedestrians, cyclists and buses; we include a longest-wait term in the reward, but a real system should include these road users explicitly and audit who waits longest. "
             "<b>Emergency vehicles</b> need priority mechanisms. <b>Privacy.</b> Queue counts from loop detectors are less sensitive than camera or licence-plate data; any camera-based sensing must follow data-protection law. "
             "<b>Accountability and transparency.</b> Operators need explainable behaviour, logs, and a clear responsibility when a learned policy contributes to an accident or to inequitable delays. "
             "<b>Claims.</b> This work is a simulation study; it makes no claim about performance on real roads.")]
-    E += [P("14. Conclusion", h1),
+    E += [P("12. Future Scope", h1),
+          P("Recommended next steps: SUMO or CityFlow validation, Webster-tuned and max-pressure baselines, function approximation (DQN/actor-critic) with parameter sharing, ablations of information versus reward sharing, more training seeds, and safety layers.")]
+    E += [P("13. Conclusion", h1),
           P(f"We implemented and evaluated multi-agent Q-learning for coordinated traffic-signal control in a 3x3 simulated network. Independent Q-learning learned within a few hundred episodes a policy that lowered waiting time by "
             f"{imp_iql_fx:.0f}% compared with a 20-s fixed-time plan overall and by about {-pct(per[iql]['asym']['avg_wait_s'][0], per[fx]['asym']['avg_wait_s'][0]):.0f}% under asymmetric demand, but offered little benefit at low demand and was roughly on par with a simple longest-queue heuristic "
             f"({imp_iql_lq:.0f}% better overall). The cooperative variant we proposed did not improve on IQL and was less reliable under peak demand. The main lessons are that (i) even simple tabular MARL can beat fixed-time control when demand is uneven, "
-            "(ii) cooperation is not automatically beneficial and needs careful design and ablation, and (iii) reliability across training seeds matters as much as average performance. "
-            "Future work: SUMO or CityFlow validation, Webster-tuned and max-pressure baselines, function approximation (DQN/actor-critic) with parameter sharing, ablations of information versus reward sharing, more training seeds, and safety layers.")]
+            "(ii) cooperation is not automatically beneficial and needs careful design and ablation, and (iii) reliability across training seeds matters as much as average performance.")]
     E += [P("References", h1)]
     refs = ["Abdulhai, B., Pringle, R., &amp; Karakoulas, G. J. (2003). Reinforcement learning for true adaptive traffic signal control. <i>Journal of Transportation Engineering</i>, 129(3), 278-285.",
             "Chu, T., Wang, J., Codeca, L., &amp; Li, Z. (2019). Multi-agent deep reinforcement learning for large-scale traffic signal control. <i>IEEE Transactions on Intelligent Transportation Systems</i>, 21(3), 1086-1095.",

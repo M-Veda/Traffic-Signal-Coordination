@@ -1,36 +1,40 @@
-# Traffic Signal Coordination using Multi-Agent Reinforcement Learning
+# Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning
 
-**Project 10, Unit 5: Real-World RL Homework Projects**
+*A Multi-Agent Reinforcement Learning Approach to Adaptive Urban Traffic Management and Congestion Optimization.*
 
-*Intelligent Multi-Agent Traffic Signal Coordination Using Reinforcement Learning for Urban Traffic Congestion Optimization*
+![Simulation: learned IQL control on a 3x3 grid under asymmetric demand](05_Experimental_Results/simulation_iql_asym.gif)
 
-![Simulation: IQL control on a 3x3 grid under asymmetric demand](05_Experimental_Results/simulation_iql_asym.gif)
+*Animation from the project's simulator: vehicles queue at red lights and are released when the signal turns green (green = go, red = stop, orange = 2 s changeover).*
 
-*Animation from our simulator: vehicles queue at red lights and are released when the signal turns green (green = go, red = stop, orange = 2 s changeover).*
+## Project overview
+
+A practical multi-agent reinforcement learning (MARL) project on **intelligent traffic signal coordination**: every intersection of a simulated road network is controlled by its own learning agent that adapts its signal phase to the current traffic, and neighbouring agents can share information. The repository contains the full pipeline - a custom traffic simulator, tabular Q-learning agents, rule-based baselines, training and evaluation code, experiment results, visualizations, a technical report and a slide deck.
+
+> **Transparency notes.** The project uses a **custom Python simulator, not SUMO or CityFlow**. All results come from simulation only; the system has not been deployed or tested on real roads, and nothing here should be read as production-ready or as a prediction of real-world performance.
+
+**Headline result.** Independent Q-Learning (IQL) lowered average vehicle waiting time by about 12% compared with a fixed-time plan (about 28% under asymmetric demand) and performed roughly on par with a longest-queue-first heuristic. The cooperative variant (Coop-IQL) did **not** outperform IQL; it was unstable in 3 of 5 training runs under peak demand (details below).
 
 ## Problem statement
 
-Assigned topic: "Traffic-signal coordination - Multiple agents control intersections in SUMO or CityFlow to reduce average waiting time."
+Fixed-time signals repeat the same cycle regardless of demand, so green time is wasted on empty approaches while queues build elsewhere, and a full queue at one junction can block the next. The problem is to learn a decentralised control policy - one agent per intersection - that reduces average waiting time, queue length and congestion using only local observations and limited communication with neighbouring agents.
 
-In this project each intersection is an agent that learns when to switch its signal so that traffic flows better across a network of intersections. The assignment suggests SUMO or CityFlow; because of installation and reproducibility constraints on Windows we used a custom Python simulator instead and say so throughout.
+## Project objectives
 
-Fixed-time signals repeat the same cycle whatever the traffic, so green time is wasted on empty approaches while queues grow elsewhere, and a full queue at one junction can block the next. We let every signal learn from experience which phase to show, and let neighbouring signals share information.
+1. Build a reproducible multi-intersection traffic simulator with variable demand scenarios.
+2. Implement one independent RL agent per signal with traffic-appropriate state, action and reward definitions.
+3. Add cooperation between neighbouring agents through information sharing and reward sharing.
+4. Benchmark against Random, Fixed-time and Longest-queue-first controllers on identical traffic.
+5. Evaluate waiting time, queue length, throughput, travel time and congestion, and report all findings honestly, including unfavourable ones.
 
-## Objectives
+## Key features
 
-1. Build a reproducible multi-intersection traffic simulator with variable demand.
-2. Implement one independent RL agent per signal, with state, action and reward definitions suited to traffic.
-3. Add cooperation between neighbouring agents (information sharing and reward sharing).
-4. Compare against Random, Fixed-time and Longest-queue-first baselines on identical traffic.
-5. Measure waiting time, queue length, throughput, travel time and congestion, and report the results honestly, including unfavourable ones.
-
-## About the project
-
-- **Simulator:** a custom, lightweight Python queue-based simulator (`04_Source_Code/traffic_env.py`). **SUMO was not used.** It needs only `pip` packages, runs on Windows and needs no API keys.
-- **Network:** 3x3 grid of 9 two-phase signalised intersections, 12 boundary entry points, individually tracked vehicles on fixed routes, spill-back when a downstream approach is full.
-- **Algorithms:** Independent Q-Learning (IQL), a cooperative variant (Coop-IQL), and three non-learning baselines.
-- **Setup:** 1000 training episodes x 5 independent runs per RL method; evaluation on 5 demand scenarios x 10 unseen seeds with identical arrivals for every controller.
-- **Result in one line:** IQL lowered the average waiting time by about 12% compared with Fixed-time (about 28% under asymmetric demand) and was roughly on par with Longest-queue-first. The cooperative variant we proposed **did not** beat IQL and was unstable in 3 of 5 training runs under peak demand.
+- Custom 3x3 signalised-grid simulator with individually tracked vehicles, spill-back and lost time.
+- Nine independent tabular Q-learning agents, plus a cooperative variant with information and reward sharing.
+- Seeded demand generator: every controller faces exactly the same vehicles in each test episode.
+- Five demand scenarios (low, medium, high, asymmetric rush hour, time-varying peak).
+- Multi-seed evaluation (5 training runs x 50 unseen demand realisations) with paired bootstrap comparisons.
+- Animated visualization of vehicles and signal states; unit tests; one-command pipeline (`run_all.py`).
+- Runs on a laptop with `pip` packages only - no paid APIs or keys.
 
 ## Reinforcement learning methodology
 
@@ -47,9 +51,13 @@ Each intersection *i* is an agent in a decentralised multi-agent MDP.
 
 **Multi-agent interaction.** All 9 agents act simultaneously every 10 s, so each faces a changing environment (non-stationarity). Coop-IQL is decentralised - there is no central Q-function or controller.
 
+## Multi-agent architecture
+
 ![Agent interaction](05_Experimental_Results/agent_interaction_diagram.png)
 
-## Algorithms and techniques implemented
+Each agent keeps its own Q-table. In Coop-IQL, neighbouring agents exchange downstream-occupancy information (state) and part of their reward; learning stays decentralised.
+
+## Algorithms implemented
 
 | Controller | Description |
 |---|---|
@@ -59,11 +67,22 @@ Each intersection *i* is an agent in a decentralised multi-agent MDP.
 | **IQL** | Independent Q-learning, local state and local reward |
 | **Coop-IQL (proposed)** | IQL + downstream-fullness information + reward sharing |
 
-## System architecture and workflow
+## Technology stack
+
+| Area | Tools |
+|---|---|
+| Language | Python 3.10+ (developed with 3.12) |
+| Numerical computing | NumPy |
+| Simulation | Custom queue-based traffic simulator (pure Python) |
+| Visualization | Matplotlib, Pillow (GIF animation) |
+| Reporting | ReportLab (PDF), python-pptx (slides) |
+| Testing | `unittest` |
+
+## System architecture
 
 ![System architecture](05_Experimental_Results/architecture_diagram.png)
 
-1. Each training episode draws a random demand scenario and seed; 1800 s are simulated, with one decision per agent every 10 s.
+1. Each training episode draws a random demand scenario and seed; 1800 s are simulated with one decision per agent every 10 s.
 2. Each agent observes its state, chooses a phase (epsilon-greedy), receives its reward and applies the Q-learning update.
 3. After training, greedy policies and baselines are evaluated on 50 unseen, identical demand realisations.
 4. Charts, tables, the report and the slides are generated from the result files by script.
@@ -79,16 +98,18 @@ Each intersection *i* is an agent in a decentralised multi-agent MDP.
 | Routing | dimension-ordered (columns, then rows) to a random boundary exit; no re-routing |
 | Demand scenarios (veh/s per entry) | `low` 0.07, `medium` 0.10, `high` 0.13, `asym` 0.16 for southbound/eastbound entries and 0.05 for the others, `peak` rising 0.05 to 0.18 and back to 0.05 |
 
-Not modelled: left turns, pedestrians, yellow phases, vehicle dynamics, lane changing, re-routing. Absolute numbers are properties of this simulator, not predictions for real roads.
+Not modelled: left turns, pedestrians, yellow phases, vehicle dynamics, lane changing, re-routing. Absolute numbers (seconds, vehicles) are properties of this simulator, not predictions for real roads.
 
-## Experimental setup
+## Training and evaluation methodology
 
 - **Training:** 1000 episodes x 5 independent runs (seeds 0-4) for each of IQL and Coop-IQL, random scenario per episode (demand seeds 0-999). About 10 minutes on one CPU core.
-- **Testing:** 5 scenarios x 10 unseen demand seeds (1000-1009), 1800 s each; the same vehicle arrivals for every controller. RL controllers run greedily (epsilon = 0), each of the 5 trained runs on all 50 realisations.
+- **Testing:** 5 scenarios x 10 unseen demand seeds (1000-1009), 1800 s each; identical vehicle arrivals for every controller. RL controllers run greedily (epsilon = 0), each of the 5 trained runs on all 50 realisations.
 - **Validation during training:** seeds 5000-5001.
 - **Metrics:** average waiting time (time spent queued, including vehicles still queued at the end), average queue length (vehicles per approach), throughput (vehicles that left in 30 min), average travel time (completed trips only), congestion index (share of approaches holding at least 10 queued vehicles), spill-back events.
 
-## Results and performance analysis
+## Experimental results and performance comparison
+
+Full tables: `05_Experimental_Results/results_overall.md`, `results_by_scenario.csv`.
 
 Mean over all scenarios and test runs (full tables: `05_Experimental_Results/results_overall.md`, `results_by_scenario.csv`):
 
@@ -110,7 +131,7 @@ Average waiting time (s) by demand scenario:
 | IQL | 23.5 | 26.4 | 33.5 | 33.9 | 48.4 |
 | Coop-IQL (proposed) | 24.0 | 26.9 | 34.3 | 34.5 | 67.5 |
 
-**Findings**
+### Findings
 
 - IQL gave the lowest average waiting time, queue length and travel time: about 12% lower waiting time than Fixed-time overall, about 28% lower under `asym` demand, and roughly on par with Longest-queue-first (a 1.9% difference, small relative to run-to-run variation).
 - Learning pays off mainly when demand is high or unbalanced. At low demand Fixed-time and IQL are almost equivalent, and Longest-queue-first is worse than Fixed-time there.
@@ -120,7 +141,7 @@ Average waiting time (s) by demand scenario:
 
 **Design iteration (full disclosure).** A first version of Coop-IQL (neighbour mean queue as shared information, 400 episodes) also failed under peak demand (average wait: IQL 36.2 s, Coop-IQL 43.4 s; archived in `05_Experimental_Results/iteration1_v1_400ep/`). We then switched to downstream-fullness flags and trained for 1000 episodes. This redesign was motivated by seeing those test results, so the test seeds are not completely untouched. The final design is still outperformed by plain IQL.
 
-## Visualizations and screenshots
+## Visualizations and simulation demonstrations
 
 | Learning curves (training return and validation waiting time) | Overall comparison |
 |---|---|
@@ -132,48 +153,51 @@ Average waiting time (s) by demand scenario:
 
 Also in `05_Experimental_Results/`: `queue_length_by_scenario.png`, `travel_time_by_scenario.png`, and the animations `simulation_iql_asym.gif` (learned IQL policy) and `simulation_fixed_asym.gif` (Fixed-time), each with a `_snapshot.png` frame.
 
-## Project folder structure
+Animations: `simulation_iql_asym.gif` (learned IQL policy) and `simulation_fixed_asym.gif` (fixed-time plan), each with a `_snapshot.png` frame. Regenerate with `python visualize.py` (see below).
+
+## Project structure
 
 ```
 Traffic-Signal-Coordination/
 ├── README.md
 ├── requirements.txt
 ├── 01_Project_Report/
-│   └── RL_Traffic_Signal_Coordination_Report.pdf      full report (9 pages)
+│   └── Traffic_Signal_Coordination_Technical_Report.pdf   technical report (9 pages)
 ├── 02_Problem_Formulation/
-│   └── Problem_Formulation_One_Page.pdf               one-page problem formulation
+│   └── Problem_Formulation.pdf                            one-page MDP / algorithm brief
 ├── 03_Presentation/
-│   └── RL_Traffic_Signal_Coordination_5_Slides.pptx   five-slide presentation
+│   └── Traffic_Signal_Coordination_Presentation.pptx      five-slide project presentation
 ├── 04_Source_Code/
-│   ├── config.py            constants (network, demand, reward, Q-learning, seeds)
-│   ├── traffic_env.py       simulator + demand generator
-│   ├── agents.py            baselines, IQL and Coop-IQL agents
-│   ├── train.py             training (IQL and Coop-IQL, 5 runs each)
-│   ├── evaluate.py          evaluation on 5 scenarios x 10 seeds
-│   ├── make_results.py      charts and tables
-│   ├── visualize.py         GIF animation of vehicles and signals
-│   ├── make_architecture.py diagrams
-│   ├── build_documents.py   builds the report and one-page PDFs
+│   ├── config.py             constants (network, demand, reward, Q-learning, seeds)
+│   ├── traffic_env.py        simulator + demand generator
+│   ├── agents.py             baselines, IQL and Coop-IQL agents
+│   ├── train.py              training (IQL and Coop-IQL, 5 runs each)
+│   ├── evaluate.py           evaluation on 5 scenarios x 10 seeds
+│   ├── make_results.py       charts and tables
+│   ├── visualize.py          GIF animation of vehicles and signals
+│   ├── make_architecture.py  diagrams
+│   ├── build_documents.py    builds the report and problem-formulation PDFs
 │   ├── build_presentation.py builds the slides
-│   ├── run_all.py           whole pipeline in one command
-│   ├── README.md            source-level notes
-│   └── tests/test_env.py    5 unit tests
+│   ├── run_all.py            whole pipeline in one command
+│   ├── README.md             source-level notes
+│   └── tests/test_env.py     5 unit tests
 ├── 05_Experimental_Results/
-│   ├── *.png, *.gif         learning curves, comparison charts, animations
+│   ├── *.png, *.gif          learning curves, comparison charts, animations
 │   ├── results_overall.md, results_wait_by_scenario.md, results_by_scenario.csv, paired_comparison_wait.json
 │   ├── evaluation_raw.json, training_logs.json, training_log.txt, trained_q_tables.pkl
-│   └── iteration1_v1_400ep/   archived first design (see "Design iteration")
+│   └── iteration1_v1_400ep/  archived first design (see "Design iteration")
 └── 06_Documentation/
-    └── Handover_Summary.md
+    └── Project_Summary.md
 ```
 
-## Dependencies and installation
+## Installation and setup
 
 Python 3.10 or newer. Dependencies (`requirements.txt`): NumPy, Matplotlib, Pillow, ReportLab, python-pptx. No paid APIs or keys are needed.
 
-The code was developed and run on Linux with Python 3.12. The Windows commands below were **not** executed on a Windows machine.
+Developed and run on Linux with Python 3.12. The Windows commands below were **not** executed on a Windows machine.
 
 ```
+git clone https://github.com/M-Veda/Traffic-Signal-Coordination.git
 cd Traffic-Signal-Coordination\04_Source_Code
 python -m venv .venv
 .venv\Scripts\activate
@@ -182,7 +206,7 @@ pip install -r ..\requirements.txt
 
 (Linux/macOS: `cd Traffic-Signal-Coordination/04_Source_Code`, `source .venv/bin/activate`, `pip install -r ../requirements.txt`.)
 
-## Training and execution
+## How to run
 
 Run from `04_Source_Code/`:
 
@@ -197,27 +221,17 @@ python visualize.py --controller coop --scenario asym --start 700 --duration 100
 
 All randomness is seeded, so a rerun on the same library versions should reproduce the reported numbers; small differences are possible across NumPy versions. `run_all.py` does not regenerate `iteration1_v1_400ep/` (produced by an earlier version of `agents.py`; kept for transparency). Running `python run_all.py` replaces the committed results with freshly generated ones.
 
-## Limitations
+## Limitations and future improvements
 
-Custom simulator (not SUMO) with two-phase signals and no left turns or pedestrians; tabular states with hand-chosen bins; only 5 training runs per method; the Fixed-time baseline is not tuned (no Webster calculation or offsets) and max-pressure was not implemented; travel time averages only completed trips. Not validated on real roads; no claim of real-world deployment is made. See the report (Sections 12-13) for limitations and ethical considerations.
+**Limitations.** Custom simulator (not SUMO or CityFlow) with two-phase signals and no left turns or pedestrians; tabular states with hand-chosen bins; only 5 training runs per method; the Fixed-time baseline is not tuned (no Webster calculation or offsets) and max-pressure was not implemented; travel time averages only completed trips. Not validated on real roads. A real deployment would additionally need safety layers (minimum green, conflict monitoring, fail-safe fallback) and fairness checks for pedestrians, cyclists and buses - see the report, Sections 10-11.
 
-## Team
+**Future improvements.** Validate in SUMO or CityFlow with realistic demand; add Webster-tuned and max-pressure baselines; deep RL (DQN / actor-critic) with parameter sharing; ablations separating information sharing from reward sharing; more training seeds; safety layers and multi-modal fairness metrics.
 
-| S. No. | Team Member Name | Roll Number |
-|---|---|---|
-| 1 | M. Sai Teja Sree Veda | 100523729038 |
-| 2 | A. Maneesha | 100523729039 |
-| 3 | R. Sravya | 100523729052 |
-| 4 | Yusra Fateen | 100523729062 |
+## Contributors
 
-## Academic submission information
-
-| Item | Details |
+| Name | Roll Number |
 |---|---|
-| Course | Reinforcement Learning |
-| Assignment | Real-World RL Homework Projects, Unit 5 (10 marks) |
-| Selected project | Project 10: Traffic-Signal Coordination using Multi-Agent Reinforcement Learning |
-| Programme | B.Tech, Artificial Intelligence & Machine Learning |
-| Institution | University College of Engineering, Osmania University, Hyderabad |
-| Submission deadline | 7 November 2026, 3:00 PM |
-| Deliverables | Problem formulation (PDF), implementation, learning curves and baseline comparison, five-slide presentation, project report (PDF) |
+| M. Sai Teja Sree Veda | 100523729038 |
+| A. Maneesha | 100523729039 |
+| R. Sravya | 100523729052 |
+| Yusra Fateen | 100523729062 |

@@ -10,7 +10,7 @@ import config as C
 from make_results import aggregate, ORDER
 
 RD = sys.argv[1] if len(sys.argv) > 1 else os.path.join("..", "05_Experimental_Results")
-OUT = os.path.join("..", "03_Presentation", "RL_Traffic_Signal_Coordination_5_Slides.pptx")
+OUT = os.path.join("..", "03_Presentation", "Traffic_Signal_Coordination_Presentation.pptx")
 NAVY, ACC, LIGHT, GREY, RED, GREEN = (RGBColor(0x1C, 0x2B, 0x4A), RGBColor(0x2E, 0x86, 0xC1), RGBColor(0xEE, 0xF3, 0xFA),
                                        RGBColor(0x55, 0x55, 0x55), RGBColor(0xC0, 0x39, 0x2B), RGBColor(0x1E, 0x84, 0x49))
 
@@ -45,7 +45,7 @@ def header(slide, n, title):
     bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, Inches(1.0)); bar.fill.solid(); bar.fill.fore_color.rgb = NAVY; bar.line.fill.background()
     add_text(slide, 0.4, 0.12, 11.5, 0.8, [title], size=28, color=RGBColor(255, 255, 255), bold=True, anchor=MSO_ANCHOR.MIDDLE)
     add_text(slide, 11.9, 0.12, 1.3, 0.8, [f"{n} / 5"], size=14, color=RGBColor(0xBB, 0xD0, 0xEA), anchor=MSO_ANCHOR.MIDDLE)
-    add_text(slide, 0.4, 7.1, 12.5, 0.3, ["Multi-Agent RL Traffic Signal Coordination  |  RL Homework (Unit 5, Project 10)  |  all results from simulation"], size=10, color=GREY)
+    add_text(slide, 0.4, 7.1, 12.5, 0.3, ["Intelligent Traffic Signal Coordination Using Multi-Agent RL  |  all results from a custom Python simulator (SUMO not used)"], size=10, color=GREY)
 
 
 def pic(slide, name, x, y, w=None, h=None):
@@ -139,5 +139,10 @@ for k, (t, its) in enumerate(cards):
     x = 0.4 + (k % 2) * 6.35; y = 1.25 + (k // 2) * 2.85
     add_text(s, x, y, 6.15, 0.5, [t], size=17, color=RGBColor(255, 255, 255), bold=True, fill=ACC if k < 3 else GREEN, anchor=MSO_ANCHOR.MIDDLE)
     add_text(s, x, y + 0.5, 6.15, 2.1, [{"t": "\u2022 " + i, "size": 17, "after": 10} for i in its], size=17, fill=LIGHT)
+prs.core_properties.title = "Intelligent Traffic Signal Coordination Using Multi-Agent Reinforcement Learning"
+prs.core_properties.author = ""
+prs.core_properties.last_modified_by = ""
+prs.core_properties.subject = ""
+prs.core_properties.comments = ""
 prs.save(OUT)
 print("saved", OUT, "slides:", len(prs.slides))
