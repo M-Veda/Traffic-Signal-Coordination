@@ -11,3 +11,5 @@ Thumbs.db
 .idea/
 # Smoke-test output of `python run_all.py --quick`
 05_Experimental_Results_quick/
+
+/06_Documentation/
